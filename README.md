@@ -210,21 +210,34 @@ The shell wrappers in `scripts/sh/` add timestamped logs and detached `tmux` exe
 
 ### From a market chart to CNN input
 
-The example below uses Kweichow Moutai (`600519`) with the formation date fixed at **2018-06-29**. The market-chart screenshot provides the familiar candlestick context; the model receives standardized binary OHLC, moving-average, and volume images over the preceding 5, 20, or 60 trading days.
+The example below uses Kweichow Moutai (`600519`) with the formation date fixed at **2018-06-29**. Each market-chart window maps to the standardized binary OHLC, moving-average, and volume image received by the CNN.
 
-<p align="center">
-  <img src="docs/assets/readme/moutai-market-chart-2018-06-29.png" width="94%" alt="Kweichow Moutai market chart with 2018-06-29 marked as the formation date">
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>Representation</th>
+      <th>I5</th>
+      <th>I20</th>
+      <th>I60</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Market chart</strong></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I5-2018-06-29.png" height="160" alt="Five-day Kweichow Moutai market-chart window"></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I20-2018-06-29.png" height="160" alt="Twenty-day Kweichow Moutai market-chart window"></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I60-2018-06-29.png" height="160" alt="Sixty-day Kweichow Moutai market-chart window"></td>
+    </tr>
+    <tr>
+      <td><strong>CNN input</strong></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I5.png" height="160" alt="Five-day Kweichow Moutai CNN input"></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I20.png" height="160" alt="Twenty-day Kweichow Moutai CNN input"></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I60.png" height="160" alt="Sixty-day Kweichow Moutai CNN input"></td>
+    </tr>
+  </tbody>
+</table>
 
-<p align="center"><em>Kweichow Moutai market chart with the 2018-06-29 formation date marked.</em></p>
-
-<p align="center">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I5.png" width="26%" alt="Five-day Kweichow Moutai price-trend image">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I20.png" width="26%" alt="Twenty-day Kweichow Moutai price-trend image">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I60.png" width="38%" alt="Sixty-day Kweichow Moutai price-trend image">
-</p>
-
-<p align="center"><em>The corresponding I5, I20, and I60 model inputs for Kweichow Moutai.</em></p>
+<p align="center"><em>Kweichow Moutai market windows and their corresponding I5, I20, and I60 CNN inputs.</em></p>
 
 ### U.S. baseline: paper versus replication
 

@@ -210,21 +210,34 @@ python scripts/py/08_stw_7846_rules.py all --market us
 
 ### 从市场行情图到 CNN 输入
 
-下面以贵州茅台（`600519`）为例，将形成日固定为 **2018-06-29**。行情截图展示投资者熟悉的 K 线背景；模型实际接收的是此前 5、20 或 60 个交易日的标准化二值图像，其中包含 OHLC、移动平均线和成交量。
+下面以贵州茅台（`600519`）为例，将形成日固定为 **2018-06-29**。三个截取的行情窗口分别对应 CNN 实际接收的 I5、I20 和 I60 标准化二值图像，其中包含 OHLC、移动平均线和成交量。
 
-<p align="center">
-  <img src="docs/assets/readme/moutai-market-chart-2018-06-29.png" width="94%" alt="以2018年6月29日为形成日的贵州茅台行情截图">
-</p>
+<table>
+  <thead>
+    <tr>
+      <th>图像类型</th>
+      <th>I5</th>
+      <th>I20</th>
+      <th>I60</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>市场行情图</strong></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I5-2018-06-29.png" height="160" alt="贵州茅台五日行情窗口"></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I20-2018-06-29.png" height="160" alt="贵州茅台二十日行情窗口"></td>
+      <td align="center"><img src="docs/assets/readme/moutai-market-I60-2018-06-29.png" height="160" alt="贵州茅台六十日行情窗口"></td>
+    </tr>
+    <tr>
+      <td><strong>CNN 输入</strong></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I5.png" height="160" alt="贵州茅台五日CNN输入"></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I20.png" height="160" alt="贵州茅台二十日CNN输入"></td>
+      <td align="center"><img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I60.png" height="160" alt="贵州茅台六十日CNN输入"></td>
+    </tr>
+  </tbody>
+</table>
 
-<p align="center"><em>贵州茅台行情截图，虚线标记形成日 2018-06-29。</em></p>
-
-<p align="center">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I5.png" width="26%" alt="贵州茅台五日价格趋势图像">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I20.png" width="26%" alt="贵州茅台二十日价格趋势图像">
-  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I60.png" width="38%" alt="贵州茅台六十日价格趋势图像">
-</p>
-
-<p align="center"><em>与该形成日对应的贵州茅台 I5、I20 和 I60 模型输入。</em></p>
+<p align="center"><em>贵州茅台市场行情窗口及其对应的 I5、I20 和 I60 CNN 输入。</em></p>
 
 ### 美国基准结果：原论文与复现
 
