@@ -208,13 +208,132 @@ The shell wrappers in `scripts/sh/` add timestamped logs and detached `tmux` exe
 
 ## Result previews
 
+### From a market chart to CNN input
+
+The example below uses Kweichow Moutai (`600519`) with the formation date fixed at **2018-06-29**. The market-chart screenshot provides the familiar candlestick context; the model receives standardized binary OHLC, moving-average, and volume images over the preceding 5, 20, or 60 trading days.
+
 <p align="center">
-  <img src="outputs/temp/us_aapl/PERMNO14593_2018-06-29_I5.png" width="26%" alt="Five-day AAPL price-trend image">
-  <img src="outputs/temp/us_aapl/PERMNO14593_2018-06-29_I20.png" width="26%" alt="Twenty-day AAPL price-trend image">
-  <img src="outputs/temp/us_aapl/PERMNO14593_2018-06-29_I60.png" width="26%" alt="Sixty-day AAPL price-trend image">
+  <img src="docs/assets/readme/moutai-market-chart-2018-06-29.png" width="94%" alt="Kweichow Moutai market chart with 2018-06-29 marked as the formation date">
 </p>
 
-<p align="center"><em>Example 5-, 20-, and 60-day price-trend images for Apple (2018-06-29).</em></p>
+<p align="center"><em>Kweichow Moutai market chart with the 2018-06-29 formation date marked.</em></p>
+
+<p align="center">
+  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I5.png" width="26%" alt="Five-day Kweichow Moutai price-trend image">
+  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I20.png" width="26%" alt="Twenty-day Kweichow Moutai price-trend image">
+  <img src="outputs/temp/cn_moutai/PERMNO600519_2018-06-29_I60.png" width="38%" alt="Sixty-day Kweichow Moutai price-trend image">
+</p>
+
+<p align="center"><em>The corresponding I5, I20, and I60 model inputs for Kweichow Moutai.</em></p>
+
+### U.S. baseline: paper versus replication
+
+The table below compares the High-minus-Low (`H-L`) weekly portfolio from the published Table I with this repository's U.S. replication. `Ret` and `SR` retain the definitions and units used in the source tables; significance stars follow those tables.
+
+| Weighting | Result | I5/R5 Ret | I5/R5 SR | I20/R5 Ret | I20/R5 SR | I60/R5 Ret | I60/R5 SR |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| Equal | Paper | 0.83*** | 7.15 | 0.84*** | 6.75 | 0.54*** | 4.89 |
+| Equal | Replication | 0.71*** | 5.85 | 0.68*** | 5.89 | 0.41*** | 3.41 |
+| Value | Paper | 0.23*** | 1.49 | 0.22*** | 1.74 | 0.16*** | 1.44 |
+| Value | Replication | 0.22*** | 1.52 | 0.18*** | 1.50 | 0.15*** | 1.23 |
+
+The replication preserves the main empirical pattern: realized returns rise across forecast deciles, and all three CNN specifications produce positive, statistically significant weekly H-L returns.
+
+<details>
+<summary>Full equal-weight U.S. decile results</summary>
+
+#### I5/R5
+
+| Portfolio | Paper Ret | Paper SR | Replication Ret | Replication SR |
+| --- | ---: | ---: | ---: | ---: |
+| Low | -0.28 | -1.92 | -0.24 | -1.72 |
+| 2 | -0.04 | -0.27 | -0.04 | -0.24 |
+| 3 | 0.03 | 0.15 | 0.02 | 0.09 |
+| 4 | 0.08 | 0.41 | 0.06 | 0.31 |
+| 5 | 0.09 | 0.48 | 0.09 | 0.49 |
+| 6 | 0.14 | 0.70 | 0.12 | 0.61 |
+| 7 | 0.17 | 0.84 | 0.16 | 0.79 |
+| 8 | 0.22 | 1.06 | 0.22 | 1.06 |
+| 9 | 0.30 | 1.48 | 0.29 | 1.41 |
+| High | 0.54 | 2.89 | 0.47 | 2.42 |
+| H-L | 0.83*** | 7.15 | 0.71*** | 5.85 |
+| Turnover | 690% | — | 696% | — |
+
+#### I20/R5
+
+| Portfolio | Paper Ret | Paper SR | Replication Ret | Replication SR |
+| --- | ---: | ---: | ---: | ---: |
+| Low | -0.32 | -1.94 | -0.26 | -1.51 |
+| 2 | -0.04 | -0.21 | -0.03 | -0.18 |
+| 3 | 0.04 | 0.20 | 0.03 | 0.18 |
+| 4 | 0.08 | 0.43 | 0.09 | 0.45 |
+| 5 | 0.12 | 0.65 | 0.11 | 0.60 |
+| 6 | 0.15 | 0.80 | 0.14 | 0.76 |
+| 7 | 0.19 | 0.97 | 0.18 | 0.92 |
+| 8 | 0.23 | 1.19 | 0.20 | 1.05 |
+| 9 | 0.27 | 1.40 | 0.25 | 1.31 |
+| High | 0.52 | 2.76 | 0.42 | 2.19 |
+| H-L | 0.84*** | 6.75 | 0.68*** | 5.89 |
+| Turnover | 667% | — | 674% | — |
+
+#### I60/R5
+
+| Portfolio | Paper Ret | Paper SR | Replication Ret | Replication SR |
+| --- | ---: | ---: | ---: | ---: |
+| Low | -0.21 | -1.10 | -0.13 | -0.60 |
+| 2 | 0.02 | 0.12 | 0.02 | 0.12 |
+| 3 | 0.07 | 0.35 | 0.07 | 0.35 |
+| 4 | 0.11 | 0.58 | 0.10 | 0.54 |
+| 5 | 0.14 | 0.75 | 0.12 | 0.64 |
+| 6 | 0.16 | 0.88 | 0.14 | 0.78 |
+| 7 | 0.17 | 0.93 | 0.16 | 0.86 |
+| 8 | 0.20 | 1.08 | 0.17 | 0.95 |
+| 9 | 0.22 | 1.23 | 0.20 | 1.11 |
+| High | 0.33 | 1.85 | 0.29 | 1.58 |
+| H-L | 0.54*** | 4.89 | 0.41*** | 3.41 |
+| Turnover | 619% | — | 592% | — |
+
+</details>
+
+Source: [published Table I](docs/Re-Imagining-Price-Trends.md#table-i) and the replicated U.S. [weekly backtest workbook](outputs/04_backtest/cnn_baseline/us/weekly/all_h1.xlsx).
+
+### China local training and U.S.-to-China transfer
+
+The following tables compare three ways to produce China A-share signals:
+
+- **China local:** train and test the CNN on the China sample.
+- **U.S. direct:** apply the U.S.-trained CNN to China images without retraining.
+- **U.S. fine-tuned:** start from U.S. weights and fine-tune the prediction head on the China training sample.
+
+All entries report the **equal-weight H-L portfolio** over the 2015–2019 China out-of-sample period. Returns are annualized; `SR` is the annualized Sharpe ratio.
+
+#### Weekly strategies (R5)
+
+| Model source | I5/R5 Return | I5/R5 SR | I20/R5 Return | I20/R5 SR | I60/R5 Return | I60/R5 SR |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| China local | 34.71% | 1.731 | 25.11% | 1.362 | 18.26% | 1.137 |
+| U.S. direct | -6.82% | -0.340 | 8.39% | 0.383 | 4.57% | 0.231 |
+| U.S. fine-tuned | 28.24% | 1.353 | 25.72% | 1.266 | 20.71% | 1.209 |
+
+#### Monthly strategies (R20)
+
+| Model source | I5/R20 Return | I5/R20 SR | I20/R20 Return | I20/R20 SR | I60/R20 Return | I60/R20 SR |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| China local | 10.78% | 1.199 | 7.35% | 0.733 | 10.30% | 1.463 |
+| U.S. direct | 10.01% | 0.911 | 12.95% | 1.153 | 3.77% | 0.395 |
+| U.S. fine-tuned | 10.04% | 1.150 | 13.32% | 1.288 | 10.90% | 1.375 |
+
+#### Quarterly strategies (R60)
+
+| Model source | I5/R60 Return | I5/R60 SR | I20/R60 Return | I20/R60 SR | I60/R60 Return | I60/R60 SR |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| China local | 6.86% | 0.901 | 4.07% | 0.537 | 1.94% | 0.286 |
+| U.S. direct | 0.29% | 0.044 | 4.96% | 0.392 | 3.01% | 0.362 |
+| U.S. fine-tuned | 9.14% | 1.092 | 2.94% | 0.362 | 3.79% | 0.563 |
+
+The direct U.S.-to-China model remains informative in several monthly and quarterly configurations but is weak at the weekly horizon. Fine-tuning restores much of the short-horizon performance and produces the strongest I5/R60 result. Full equal-, float-cap-, and total-cap-weighted comparisons are available in the [weekly](outputs/07_transfer_us_cn/compare/cn/weekly/local_vs_direct_vs_finetune_h1.xlsx), [monthly](outputs/07_transfer_us_cn/compare/cn/monthly/local_vs_direct_vs_finetune_h1.xlsx), and [quarterly](outputs/07_transfer_us_cn/compare/cn/quarterly/local_vs_direct_vs_finetune_h1.xlsx) workbooks.
+
+### Technical-rule benchmark
 
 <p align="center">
   <img src="outputs/08_stw_7846_rules/us/figures/figure8_stw_sharpe_distribution.png" width="82%" alt="Distribution of Sharpe ratios across 7,846 technical trading rules">
@@ -222,7 +341,7 @@ The shell wrappers in `scripts/sh/` add timestamped logs and detached `tmux` exe
 
 <p align="center"><em>Technical-rule Sharpe distributions with CNN benchmarks.</em></p>
 
-See `outputs/analysis_results/` for cumulative-return figures, decile curves, transfer-learning comparisons, and consolidated workbooks. Results in the repository are research artifacts and should not be interpreted as live or investable performance.
+See `outputs/analysis_results/` for cumulative-return figures, additional decile curves, transfer-learning comparisons, and consolidated workbooks. Results in the repository are research artifacts and should not be interpreted as live or investable performance.
 
 ## Reproducibility notes
 
